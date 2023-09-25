@@ -8,7 +8,7 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import classification_report
-app=Flask(__name__)
+app=Flask(__name__,template_folder='.')
 data=pd.read_csv('TRAVEL.csv')
 #model=pickle.load(open("Sid.pkl",'rb'))
 #model = keras.models.load_model('travel_insurance_model.h5')
