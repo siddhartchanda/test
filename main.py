@@ -21,22 +21,6 @@ def index():
     d_names = sorted(data['Destination'].unique())
     return render_template('index.html', agencies=agency_list, agency_type=agency_type_list, ch=distribution_channels, pn=product_names,gender=['M','F',None],d=d_names)
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    l=[]
-    Agency = request.form.get('agency')
-    Agency_Type=request.form.get('t')
-    dis=request.form.get('s')
-    pn=request.form.get('product')
-    d=request.form.get('duration')
-    des=request.form.get('destination')
-    g=request.form.get('gender')
-    a=request.form.get('age')
-    #print(location, bhk, bath,sqft)
-    input = pd.DataFrame([[Agency,Agency_Type,dis,pn,d,des,g,a]],columns=['Agency','Agency Type','Distribution Channel','Product Name','Duration','Destination','Gender','Age'])
-    l.extend([Agency,Agency_Type,dis,pn,d,des,g,a])
-    return res(l)
-
 def res(l):
     # Load the dataset
     df = pd.read_csv("TRAVEL.csv")
@@ -119,5 +103,23 @@ def res(l):
     #print(classification_report(y_test, y_pred,zero_division=1))
     # Print the prediction
     return "Predicted Claim: " + predicted_claim
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    l=[]
+    Agency = request.form.get('agency')
+    Agency_Type=request.form.get('t')
+    dis=request.form.get('s')
+    pn=request.form.get('product')
+    d=request.form.get('duration')
+    des=request.form.get('destination')
+    g=request.form.get('gender')
+    a=request.form.get('age')
+    #print(location, bhk, bath,sqft)
+    input = pd.DataFrame([[Agency,Agency_Type,dis,pn,d,des,g,a]],columns=['Agency','Agency Type','Distribution Channel','Product Name','Duration','Destination','Gender','Age'])
+    l.extend([Agency,Agency_Type,dis,pn,d,des,g,a])
+    return res(l)
+
+
 if __name__=="__main__":
     app.run(debug=True,port=5000)
