@@ -120,4 +120,4 @@ def res(l):
     # Print the prediction
     return "Predicted Claim: " + predicted_claim
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=5000)
