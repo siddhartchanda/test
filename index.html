@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+          /* Gradient background */
+          background: linear-gradient(45deg, #e0eafc, #cfdef3);
+        }
+      </style>
+    <title>Insurance Claim Prediction</title>
+</head>
+<body  class="bg-dark">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>Welcome to Travel Insurance claim Predictor</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" accept-charset="utf-8">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="agency"><b>Choose an agency:</b></label>
+                                <select class="selectpicker form-control" id="agency" name="agency">
+                                    {% for agency in agencies %}
+                                    <option value="{{ agency }}">{{ agency }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="t"><b>Choose an agency type:</b></label>
+                                <select class="selectpicker form-control" id="t" name="t">
+                                    {% for t in agency_type %}
+                                    <option value="{{ t }}">{{ t }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="s"><b>Choose a Distribution Channel:</b></label>
+                                <select class="selectpicker form-control" id="s" name="s">
+                                    {% for channel in ch %}
+                                    <option value="{{ channel }}">{{ channel }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="product"><b>Choose a Product Name:</b></label>
+                                <select class="selectpicker form-control" id="product" name="product">
+                                    {% for product in pn %}
+                                    <option value="{{ product }}">{{ product }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="duration"><b>Enter Duration:</b></label>
+                                <input type="text" class="form-control" id="duration" name="duration" placeholder="Enter Duration (No of Days)">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="destination"><b>Choose a Destination:</b></label>
+                                <select class="selectpicker form-control" id="destination" name="destination">
+                                    {% for pp in d %}
+                                    <option value="{{ pp }}">{{ pp }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 form-group">
+                                <label for="gender"><b>Choose a your Gender:</b></label>
+                                <select class="selectpicker form-control" id="gender" name="gender">
+                                    {% for g in gender %}
+                                    <option value="{{ g }}">{{ g }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="age"><b>Enter Age:</b></label>
+                                <input type="text" class="form-control" id="age" name="age" placeholder="Age">
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary" onclick="send_data()">Predict Claim</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="col-md-12 text-center">
+                        <h3><span id="prediction"></span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function form_handler(event) {
+        event.preventDefault(); // Don't submit the form normally
+    }
+
+    function send_data() {
+        document.querySelector('form').addEventListener("submit", form_handler);
+        var fd = new FormData(document.querySelector('form'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/predict', true);
+        document.getElementById("prediction").innerHTML = "Please enter all boxes";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById('prediction').innerHTML =  xhr.responseText;
+            }
+        };
+        xhr.onload = function () {
+        };
+        xhr.send(fd);
+    }
+</script>
+
+<!-- jQuery, Popper.js, and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
